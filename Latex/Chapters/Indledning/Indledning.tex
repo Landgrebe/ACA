@@ -3,16 +3,16 @@
 %-------------------------------------------------------------------------------
 
 \section{Indledning}
-Under optagelse til et live madprogram, sker det ofte at værten skal bruge en blender/foodprocesser. Dette betyder at værten ikke kan kommunikere med seerne mens blenderen/foodprocesseren kører. Denne problematik vil Noise Suppression System (NSS) kunne afhjælpe. Gennem en digital signal prossesering (DSP), vil vi dæmpe støjsignalet fra en køkkenmaskine dynamisk i realtid. Systemet består af to mikrofoner, et placeres tæt på støjen, et andet tæt på værten. De to mikrofoner fungere som input til vores system (Blackfin), hvor procceseringen og filtreringen foregår. Efter proceseringen bliver produktet afspillet på en højtaler, som erstatning for højtaleren fra et tv-apperat. Et overblik over systemet kan ses på figur \ref{fig:konceptbillede}
+Vores projekt tager udfordringen op med en mejetærsker (eller et andet køretøj), som har den problemstilling, at den kan komme ud i ujævnt terræn, hvormed at tanken på mejetærskeren kan få overbalance til den ene side og evt. tippe køretøjet eller tabe gods overbord. Ved at lave et system, som selv kan nivellere ”overkroppen” af køretøjet til vandret position, uanset ”underkroppens” vinkel, kan dette problem løses. Dette sikre at både kabinen og tanken på mejetærskeren altid vil være i vandret position vinkelret på køreretningen i ujævnt terræn.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 400pt]{Img/Konceptbillede}
-	\caption{Konceptbillede for NSS}
+	\includegraphics[width = 300pt]{Img/Visionbillede}
+	\caption{Visionsbillede}
 	\label{fig:konceptbillede}
 \end{figure}
 
-Med udgangspunkt i brugerens behov vil der blive opstillet en række brugsscenarier, der beskriver brugerens interaktion med systemet. Disse scenarier vil sammen med en række veldefinerede krav og afgrænsninger, danne grundlaget for designet af alle dele af systemet.  \\ 
+Kontrolsystemet kommer til at bestå med en motor, et gyroskop og en Lego bil hvor overdelen kan vippe sidelæns. Det forventes at systemet kan regulere en horisontal vinkel på op til ±30 grader tilbage til vandret i ”overdelen” ±1 grad. Systemet skal være adaptivt, idet mængden af gods/korn kan variere og dermed ændre belastningen på motoren.   \\ 
 
 \newpage
 

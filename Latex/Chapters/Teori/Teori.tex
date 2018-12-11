@@ -4,7 +4,8 @@
 
 
 \section{Teori}
-I procceseringsfasen af projektet, har vi valgt at bruge et adaptivt filter - LMS (Least Mean square) algoritme. LMS er et adaptivt filter som består af 2 funktionelle blokke, hvor den ene blok (Linear Filter) fungerer som et filter, det andet (Adaptive Algorithm) som et dynamisk beregner af nye koefficinter til første blok.  Filteret trækker herefter de beregnede filter fra det samlede lydsignal. 
+For at kunne estimere dette system, er det første som skal laves en overføringsfunktion, for den motor som bliver brugt til projeketet. Her stødte vi på det første problem med vores system, da det ikke var stabilt. Gruppen blev derfor nød til at indsætte fjedre, for at sikre at systemet var stabilt i en stationær position. Hertil blev der valgt at tilføje en elastik til hver side af bilen, for at opfylde ønsket om et stabilt stationær system. 
+Herefter blev målingen lavet for at identificere, en overføringsfunktion for motoren. Da dette system, både skal kunne gå mod højre og venstre, blev der påført et firkantsignal. herunder ses, hvordan dynamikken i motorens tagometer blev genereret gennem firkantsignalet. (billedet mangler, da vi er ved at kigge på om vi hellere vil have det i grader)      
    
 
 \begin{figure}[H]
