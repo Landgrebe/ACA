@@ -87,7 +87,7 @@ D =
 \end{enumerate}      
 Som vist tidligere, er der beregnet nogle poler, som ønskes. Derfor indsættes en K matrix, som skal placeres, i tilbagekoblingen for at opnå de øsnkede poler i close loopet, dette ses nedenunder. 
 
-\begin{lstlisting}
+\begin{lstlisting}[frame=single]
 K = place(A,B,poles);
 AA = A-B*(K);
 sys=ss(AA,B,C,D);
@@ -108,7 +108,7 @@ Da systemet i praksis foregår på en motorblok, kan vi ikke hente de states mat
   \dot{x}=Ax+Bu \\
   y=Cx
 \end{gather}
-Derfor indsættes yderligere en blok i systemet, for at kunne observere ind og output, og på baggrund af dem, og de beregnede state matrixes, beregnes en estimeret xhat, som skal bruges til tilbagekoblingen. \\
+Derfor indsættes yderligere en blok i systemet, for at kunne observere ind og output, og på baggrund af dem, og de beregnede state matrixes, beregnes en estimeret xhat, som skal bruges til tilbagekoblingen, som erstatning for states matrixen \\
 Observer formlen hedder:
 
 
@@ -122,7 +122,13 @@ Vha af mellemregninger, får vi formlen:
   \dot{\hat{x}}=(A+BK-LC)\hat{x}+Ly \\
   u=K\hat{x}
 \end{gather}
+
 Som er den formlen vi bruger til at lave vores observer.\\
 
-Til observer tilføres en ny konstant
+Til observer tilføres en ny konstant L, som er udregnet til at styre observerens hastighed, så den er hurtigere end controlleren. L er beregnet ud fra formlen:
+\begin{lstlisting}[frame=single]
+L=place(A', C', poles)'
+\end{lstlisting}
+
+som er fundet her HENVISNING!!!
  
