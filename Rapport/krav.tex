@@ -1,0 +1,25 @@
+\section{Krav til dynamikken}
+
+I dette afsnit beskrives kravene til hvilken funktionalitet systemet har. Der er opstillet følgende række krav i første omgang.
+\begin{itemize}
+	\item Systemet kan regulere en horisontal vinkel på op til ±30 grader tilbage til vandret i ”overdelen” ±1 grad
+	\item Overshoot max 5\%
+	\item Risetime 0.2 sekund 
+	\item Settlingtime 1 sekund 
+	\item Stationær fejl 10\%  
+	
+\end{itemize}
+
+
+
+Herunder vises et blokdiagram, som viser en beskrivelse af systemets (fysiske) blokke, som beskriver opbygningen af systemet på Lego bilens styringsenhed. 
+
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 400 pt]{figur/blokdiagram.png}
+	\caption{Blokdiagram}
+	\label{fig:Blokdiagram}
+\end{figure}
+
+\textit{beta} er motorens vinkel,\textit{ alpha} er vinkel forstyrrelsen fra terrænets hældning. \textit{rho} er vinkelen på selve overdelen af Lego bilen. Det er denne vinkel \textit{rho} som gerne forsøges at reguleres til 0 grader eller vandret. Outputtet fra gyroskopet er en vinkelhastighed som igennem integration laves om til en vinkel ændring i forhold til start vinklen (helst vandret). 
