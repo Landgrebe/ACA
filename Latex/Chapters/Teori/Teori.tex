@@ -4,34 +4,3 @@
 
 
 \section{Teori}
-For at kunne estimere dette system, er det første som skal laves en overføringsfunktion, for den motor som bliver brugt til projeketet. Her stødte vi på det første problem med vores system, da det ikke var stabilt. Gruppen blev derfor nød til at indsætte fjedre, for at sikre at systemet var stabilt i en stationær position. Hertil blev der valgt at tilføje en elastik til hver side af bilen, for at opfylde ønsket om et stabilt stationær system. 
-Herefter blev målingen lavet for at identificere, en overføringsfunktion for motoren. Da dette system, både skal kunne gå mod højre og venstre, blev der påført et firkantsignal. herunder ses, hvordan dynamikken i motorens tagometer blev genereret gennem firkantsignalet. (billedet mangler, da vi er ved at kigge på om vi hellere vil have det i grader).      
-   
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width = 400pt]{Img/Figures}
-	\caption{LMS adaptive filter}
-	\label{fig:LMS_filter}
-\end{figure}
-
-På figur \ref{fig:LMS_filter} ses et overblik over det adative system, hvor x(n) er støjsignalet, y(n) er det filtrede støjsignal, med koefficienter som opdateres fra blokken "Adaptive Algoritm". d(n) er det ønskede signal inklusiv det støjende signal. e(n) er forskellen mellem d(n) og y(n) og derved støjen fratrukket fra det samlede signal af ønsket og støj.\cite{Teori}  \newline 
-
-
-Det digitale filter bliver beregnet ud fra formlen:
-
-\begin{equation}
-  y(n) = \displaystyle\sum_{l=0}^{L-1} W(n)*x(n-1)
-\end{equation}
-Hvor W(n) er den værdi, som dynamisk opdateres. Dette sker ved at vi beregner den næste værdi ud fra formlen: 
-
-\begin{equation}
-  W(n+1) = W(n)-\mu *X(n)*e(n)
-\end{equation}
-
-Hvor W er den nye koefficient til filteret, X(n) er input signalet, og \textmu\ er en faktor, som bestemmer hastigheden af filteret, samt styrer infaldstiden. Hvis \textmu\ er lav bliver filteret langtsommere, mens settling time stiger jo højere vi kommer. Typisk må denne værdi ikke overstige 1. 
-\newline
-Dette giver os et endeligt udtryk som stemmer overens med figur \ref{fig:LMS_filter}, ift summeringspunktet: 
-\begin{equation}
-  e(n) = d(n)-y(n)
-\end{equation} 
