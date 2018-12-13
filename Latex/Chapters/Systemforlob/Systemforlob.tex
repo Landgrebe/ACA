@@ -23,7 +23,7 @@ Overføringsfunktionen bliver genereret ud fra funktionen tfest(), som estimerer
   Tf(s) = \frac{5.029}{s^2 + 39.28 s + 717.9}
 \end{equation}
 
-I forhold til vores krav, forsøges der at placere poler til systemet. Dette laves ud fra udregningen: 
+I forhold til vores krav til dynamikken, forsøges der at placere poler til systemet. Dette laves ud fra udregningen: 
 
 
 \begin{equation}
@@ -38,7 +38,7 @@ Hvor wn beregnes ud fra ligningen:
 
 Og zeta, også kaldet damping ratio beregnes ud fra: 
 \begin{equation}
-  \zeta = \frac{-\ln(OS/100)}{sqrt{\pi^2+\ln^2(OS/100)}}
+  \zeta = \frac{-\ln(OS/100)}{\sqrt{\pi^2+\ln^2(OS/100)}}
 \end{equation} 
 
 ud fra de kravene - Settling Time (Ts) og damping ratio, beregner vi derved poler som ligger i -4\textpm\ 4.08i. 
@@ -85,7 +85,7 @@ D =
 \end{bmatrix}
      $  
 \end{enumerate}      
-Som vist tidligere, er der beregnet nogle poler, som ønskes. Derfor indsættes en K matrix, som skal placeres, i tilbagekoblingen for at opnå de øsnkede poler i close loopet, dette ses nedenunder. 
+Som vist tidligere, er der beregnet nogle poler, som ønskes. Derfor indsættes en K matrix, som skal placeres, i tilbagekoblingen for at opnå de ønskede poler i close-loopet, dette ses nedenunder. 
 
 \begin{lstlisting}
 K = place(A,B,poles);
