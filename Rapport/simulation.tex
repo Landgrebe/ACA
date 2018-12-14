@@ -1,5 +1,5 @@
 \section{Simulation}
-For at teste den kontinuere controller's respons modelleres systemet ud fra state space repræsentationen og de fundne K-værdier til følgede blokdiagram uden brug af observer i første omgang. 
+For at teste den kontinuere controller's respons modelleres systemet ud fra state space repræsentationen og de fundne K-værdier til følgende blokdiagram uden brug af observer i første omgang. 
 
 \begin{figure}[H]
 	\centering
@@ -8,7 +8,7 @@ For at teste den kontinuere controller's respons modelleres systemet ud fra stat
 	\label{fig:Simulink_blokdiagram_1}
 \end{figure}
 
-State matricen hentes direkte fra modellen ligesom i Mathlab. Delay blokken med 2 unit delay skyldes at gerne vi simulere at gyroskopet på udgangen bruger 1 delay på at sample og og 1 delay på at integrere den samplede værdi.
+State matricen hentes direkte fra modellen ligesom i Matlab. Delay blokken med 2 unit delay skyldes at gerne vi simulere at gyroskopet på udgangen bruger 1 delay på at sample og og 1 delay på at integrere den samplede værdi.
 Ved at sende et step med amplituden 30 ind som reference signal forventer vi derfor at kunne måle en værdi på 30 på outputtet efter cirka 1 sekund efter steppet. Dette kan ses i scopet 
 
 \begin{figure}[H]
@@ -23,6 +23,18 @@ Resultatet passer med forventningerne med settling time, overshoot og ingen stea
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = 0.9\textwidth]{figur/Simulink_blokdiagram_2}
-	\caption{Blok diagram for den kontinuere controller uden observer}
+	\caption{Blok diagram for den kontinuere controller med observer}
 	\label{fig:Simulink_blokdiagram_2}
 \end{figure}
+I \autoref{fig:Simulink_blokdiagram_2} ses det observeren har outputtet fra gyroskoppet som input og spytter 2 states ud som føres tilbage med hver deres forstærkning K. Observeren er implementeret ud fra tidligere design og kan ses herunder
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 0.7\textwidth]{figur/Simulink_observer_continues}
+	\caption{Kontinuer observer}
+	\label{fig:Simulink_observer_continues}
+\end{figure}
+
+Ved blokdiagrammet i \autoref{fig:Simulink_blokdiagram_1} kan 
+
+
