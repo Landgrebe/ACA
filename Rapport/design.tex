@@ -19,8 +19,9 @@ Herefter blev målingen lavet for at identificere, en overføringsfunktion for m
 Overføringsfunktionen bliver genereret ud fra funktionen \textit{tfest()}, som estimerer en overføring ud fra inputtet vs outputtet \textit{beta}. Hertil får vi overføringsfunktionen:
 
 \begin{equation}
-Tf(s) = \frac{5.029}{s^2 + 39.28 s + 717.9}
+Tf(s) = \frac{188.6}{s^2 + 188.6 s + 358.2}
 \end{equation}
+    
 
 \subsubsection{Pol placeringskontrol}
 For at opfylde vores krav til dynamikken, forsøges der at placeres dominerede poler i systemet. Først findes damping ratio'en ($ \zeta $) ud fra valget om overshoot (OS) på følgende måde: 
@@ -54,8 +55,8 @@ I dette projekt bliver systemet controller del repræsenteret på controller sta
 	A = 
 	\begin{bmatrix}
 	
-	-39.2765 & -717.8563 \\
-	1.0000     &    0
+	-24.6783 &-358.2121\\
+	1.0000      &   0
 	\end{bmatrix}
 	$
 	\item
@@ -73,7 +74,7 @@ I dette projekt bliver systemet controller del repræsenteret på controller sta
 	C = 
 	\begin{bmatrix}
 	
-	0  &  5.0293
+	0  & 188.6101
 	\end{bmatrix}
 	$    
 	\item
@@ -85,28 +86,62 @@ I dette projekt bliver systemet controller del repræsenteret på controller sta
 	\end{bmatrix}
 	$  
 \end{enumerate}      
-Som vist tidligere, er der fundet nogle poler, som ønskes realiseret. Derfor indsættes en K matrix, som skal placeres, i tilbagekoblingen for at opnå de ønskede poler i close-loopet, dette ses nedenunder. 
+Som vist tidligere, er der fundet nogle poler, som ønskes realiseret. Derfor indsættes en K matrix, som skal placeres, i tilbagekoblingen for at opnå de ønskede poler i close-loopet. Først forsøges blot de to konjugerede poler realiseret for at se om kravene til dynamikken er opfyldt, det gøres således:
 
 \begin{lstlisting}[frame=single]
 K = place(A,B,poles);
 AA = A-B*(K);
 sys=ss(AA,B,C,D);
 \end{lstlisting}
+Her er AA den nye state matrix som står for tilbagekoblingen med K værdierne for at placere de nye poler i Matlab. Resultatet af den tilbagekoblingen kan ses herunder. 
 
-Herved vises closed loop repræsentationen, for controller design, ift. kravene på overshoot og settling time.\\
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 1\textwidth]{figur/Step_continues_1}
+	\caption{Step respons (StepAmplitude = 30) af Kontinuer controller uden steady state error korrektion}
+	\label{fig:Kontinuer controller 1}
+\end{figure}
 
 
-HEREFTER KAN VI TILFØJE EN Ke, som regulerer på STEADY STATE ERROR (MANGLER KODE HERFRA). 
+Som det kan ses i \autoref{fig:Kontinuer controller 1}, passer dynamikken meget til kravene omkring overhoot og settling time men idet forstærkningen i systemet er for høj, kommer der  betydelig steady state error. Dette kan rettes til ved at tilføje den sidste pol som fjerner fejlen. Men først skal A og B matricen udvides så de kan indeholde den extra state, Dernæst skal alle tre poler placeres igen for at få tre nye K værdier, hvor den sidste er Ke, som ganges på integration polen i loopet. Dette kan ses herunder
+
+\begin{lstlisting}[frame=single]
+% Find feedback gains for the desired poles
+A_new=[A [0;0];-C 0]; % A matrix after adding an extra state
+B_new=[B;0]; % B matrix after adding an extra stat
+
+k = place(A_new,B_new,pp);
+K=[k(1) k(2)];
+Ke=-k(3);
+
+% Define closed loop system
+A_CL=[A-B*K B*Ke;-C 0];
+B_CL=[0;0;1];
+C_CL=[C 0];
+sys_CL=ss(A_CL,B_CL,C_CL,D);
+\end{lstlisting}
+
+Her er A\_CL den nye state matrix som står for den udvidede tilbagekoblingen med alle K værdierne for at placere polerne som ønsket i Matlab. Resultatet af den udvidede tilbagekoblingen kan ses herunder. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 1\textwidth]{figur/Step_continues_2}
+	\caption{Step respons (StepAmplitude = 30) af Kontinuer controller med steady state error korrektion}
+	\label{fig:Kontinuer controller 2}
+\end{figure}
+
+Som det kan ses i \autoref{fig:Kontinuer controller 2}, passer responsen nu til både kravene omkring overhoot, settling time og steady state error.
+
 
 
 
 \subsection{Observer design}
-Da systemet i praksis foregår på en motorblok, kan vi ikke hente de states matrixen, da x1 og x2 er en del  af systemet, ift ligningen for state space controller repræsentationen: 
+Da systemet i praksis foregår på en LEGO motorblok, kan vi ikke hente states matrixen direkte, da x1 og x2 er en del  af systemet, ift ligningen for state space controller repræsentationen: 
 \begin{gather}
 \dot{x}=Ax+Bu \\
 y=Cx
 \end{gather}
-Derfor indsættes yderligere en blok i systemet, for at kunne observere ind og output, og på baggrund af dem, og de beregnede state matrixes, beregnes en estimeret xhat, som skal bruges til tilbagekoblingen, som erstatning for states matrixen \\
+Derfor indsættes yderligere en blok i systemet, for at kunne observere ind og output, og på baggrund af dem, og den beregnede state matrix, beregnes en estimeret xhat, som skal bruges til tilbagekoblingen, som erstatning for states matrixen \\
 Observer formlen hedder:
 
 
@@ -122,13 +157,16 @@ u=K\hat{x}
 \end{gather}
 
 Som er den formlen vi bruger til at lave vores observer.\\
+Først skal vi vælge observatørens forstærkning $ L $. Da vi ønsker at observerens dynamik skal være meget hurtigere end selve systemet, skal vi placere polerne mindst fem gange længere til venstre end systemets dominerende poler. Vi kan designe observerens forstærkning med følgende kommando uden at transformere vores state space respræsentation til observer canonical form
 
-Til observer tilføres en ny konstant L, som er udregnet til at styre observerens hastighed, så den er hurtigere end controlleren. L er beregnet ud fra formlen:
 \begin{lstlisting}[frame=single]
-L=place(A', C', poles)'
+%Valg af poler er polerne ganget med 5
+poles_L = poles*5; 
+%Beregning af L
+L = place(A', C', poles_L)'; 
 \end{lstlisting}
 
-som er fundet her HENVISNING!!!
+Derfor kan observatøren nu implementeres i Simulink og bruges til at hente state matricen ud fra outputtet fra gyroskopet. Dette beskrives senere under "Simulation"
 
 \subsection{Diskret controller design}
 For at kunne implementere systemet på en microcontroller - som på LEGO EV3, kan systemet med fordel transformeres til en diskret state space model. Dette kommer af at reguleringen skal foregå på et digitalt system, som sampler med en bestemt frekvens. Både overføringsfunktionen og state space repræsentationen bliver transformeret til diskrete værdier, det samme gøres ved vores poler, hvormed K værdierne ændres til de passende værdier. Alt dette gøres igennem matlab, hvor funktionen c2d bliver brugt.
