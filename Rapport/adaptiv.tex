@@ -1,6 +1,5 @@
 \section{Adaptiv}
 
-<<<<<<< HEAD
 Gennem Design sektionen, kommer vi ikke ind på den apadtive del af projektet. Dette skyldes grundet tidsmangel, at gruppen ikke nåede at implementere et adaptiv regulerings feedback. I dette afsnit, vil der forklares om adaptiv controller, og hvordan det burde være implementeret til projektet. 
 
 \subsection{MRAC og MIT Rule}
@@ -52,7 +51,14 @@ Men da matrice beregninger, er meget tunge, omskrives formlen, da RLS skal imple
 	\label{fig:RLS_formel}
 \end{figure}
 Hvor Phi de kendte værdier, in- og output. 
-     
-=======
-cdscdcdfd
->>>>>>> f56296b59406512b09d5e263540e14b9446ede3f
+
+\subsection{Glemselsfaktor og Kalman filter}  
+Det endelige RLS system kan forbedres med flere faktorer, her vil vi forklare kort om de to som er blevet præsenteret til undervisningen. 
+
+\subsubsection{Glemselsfaktor}
+Glemselsfaktoren gør det at den kun kigger på de forrige samples og ikke hele signalet, dette gør system hurtigere overfor ændringer, på hver givent sample. 
+
+\subsubsection{Kalman filter}
+Kalman filteret er godt i de situationer hvor der tilføres støj til systemet, som reelt set altid vil være i en virkelig implementering. Her er Kalman filteret ikke så modtagelig overfor støj, og derved bedre til at estimere de korrekte værdier. Kalman filteret er dog langtsommere end glemselsfaktoren. 
+  
+
