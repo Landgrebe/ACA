@@ -1,8 +1,19 @@
 \section{Test på LEGO bil}
 
-Gennem projektarbejdet, har gruppen testet den endelige løsning på lego-bilen. Men da simuleringen af det digitale system ikke fungerede, er der kun testet med den kontinuere kontroller model med diskret integration for at systemet kan følge med. Dette har dog den ulempe, at vi bliver nød til, at sample på systemet, og derfor kommer systemet ikke til at være 100\% perfekt, da vi ikke kan sample uendeligt. Dog burde vores realisering, ligne vores simulering, hvor vi også har indført diskret integration. 
+Gennem projektarbejdet, har vi testet den endelige løsning på LEGO-bilen. Men da simuleringen af det komplette digitale system med korrektion for steady state error ikke fungerede, er der kun testet med modellen for den kontinuere kontroller  med diskrete integrations blokke så LEGO-computeren kan følge med beregningsmærssigt. Dette er ikke den helt optimale løsning, idet vi burde sample uendeligt hurtigt for at leve op til den kontinuere controller forventninger. Dog burde vores realisering, ligne vores simulering, hvor vi også har indført diskrete integrations blokke for at kunne sammenligne med bilens opførelse. Controlleren for LEGO bilen kan ses i \autoref{fig:Simulink_blokdiagram_LEGO} 
 
-Under realiseringen, opdagede vi dog endnu en fejlkilde, som gjorde at systemet opførte sig anderledes. Dette kom af den friktion som systemet har. Denne friktion er nemlig ikke liniær, hvilket betyder, at modstanden falder, når spændingen til motoren når en bestemt størrelse. Derfor får systemet et kraftigt udsving, da den overkompentserer for en fejl. Projektet har derfor et realiserings problem, og vil skulle bruge en meget hurtig regulerings sløjfe, for at kunne korrigere for fejlen. Dette er nok ikke muligt i praksis, hvorfor en bedre løsning ville være at indføre 2 systemer. Her ville det første system, have control over motoren, når friktionen var belastende, og et system, som tager over når friktionen falder kraftig i belastning. På figur \ref{fig:lego_bil} vises et billede af realiseringen, hvor aksen med hjulene står med en skæv vinkel, mens at aksen med kroppen af bilen, står vandret. 
+\begin{figure}[H]
+	\centering
+	\includegraphics[width = 1\textwidth]{figur/Simulink_blokdiagram_LEGO}
+	\caption{Blok diagram for den kontinuere controller uden observer}
+	\label{fig:Simulink_blokdiagram_LEGO}
+\end{figure}
+
+Det ses i \autoref{fig:Simulink_blokdiagram_LEGO} at outputtet måles af gyroskopet (vinkel hastighed) og integreres til en vinkel inden det sendes ind i den kontinuere observer for at få states matricen ud. Gain blokken med -1 er for at vinde vende gyroskopets signal rigtigt. LEGO bilen sender også vinklen rho ud på sin terminal så vi kan se den vinkel den måler og hvor meget den drifter med tiden.
+
+Under realiseringen, opdagede vi dog endnu en fejlkilde, som gjorde at systemet opførte sig anderledes. Dette kom af den friktion som systemet har. Denne friktion er nemlig ikke liniær, hvilket betyder, at modstanden falder, når spændingen til motoren når en bestemt størrelse. Derfor får systemet et kraftigt udsving, da den overkompensere for en fejl. Projektet har derfor et realiserings problem, og vil skulle bruge en meget hurtig regulerings sløjfe, for at kunne korrigere for fejlen. Dette er nok ikke muligt i praksis, hvorfor en bedre løsning ville være at indføre 2 systemer. Her ville det første system, have control over motoren, når friktionen var belastende, og et system, som tager over når friktionen falder kraftig i belastning.
+
+På \autoref{fig:lego_bil} vises et billede af realiseringen, hvor aksen med hjulene står med en skæv vinkel, mens at aksen med kroppen af bilen, står vandret. 
 
 \begin{figure}[H]
 	\centering
@@ -10,3 +21,5 @@ Under realiseringen, opdagede vi dog endnu en fejlkilde, som gjorde at systemet 
 	\caption{Lego realisering}
 	\label{fig:lego_bil}
 \end{figure}   
+
+Bilen kan godt regulere sig ind til vandret, hvis den ikke bliver påført en for stor forstyrrelse fx over 20-30 grader. Bliver vinklen for stor overkompensere bilen pga friktion. Bilen virker også kun i nogle ganske få minutter da gyroskopet derefter har driftet og viser forkert vinkel, hvilket for bilen til at overkompensere endnu mere da vandret nu er "forskudt". Til sidste er systemet ikke glad for for hurtige ændringer da dette for gyroskopet til at drifte hurtigere.

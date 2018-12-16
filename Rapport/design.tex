@@ -295,7 +295,7 @@ poles_Ld =pole(GLz);
 Ld = place(Ad', Cd', poles_Ld)';  
 \end{lstlisting}
 
-Derfor kan observatøren nu implementeres i Simulink og bruges til at hente et gæt på state matricen ud fra outputtet y (rho) fra gyroskopet og inputtet u til motor blokken. Denne implementering følger observer ligningen fra før og kan ses i diagrammet herunder i \autoref{fig:Simulink_observer_diskret}
+Derfor kan observatøren nu implementeres i Simulink og bruges til at hente et gæt på state matricen ud fra outputtet y (rho) fra gyroskopet og inputtet u til motor blokken. Denne implementering følger observer ligningen fra før og kan ses i diagrammet herunder i \autoref{fig:Simulink_observer_diskret}.
 Den eneste ændring i forhold til den kontinuere observer er at integration blokken nu er udskiftets med en unit delay blok for at realisere den samplede state matrix   
 
 \begin{figure}[H]
