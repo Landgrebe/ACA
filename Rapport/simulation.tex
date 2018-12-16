@@ -3,38 +3,41 @@ For at teste den kontinuere controller's respons modelleres systemet ud fra stat
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.9\textwidth]{figur/Simulink_blokdiagram_1}
+	\includegraphics[width = 1\textwidth]{figur/Simulink_blokdiagram_1}
 	\caption{Blok diagram for den kontinuere controller uden observer}
 	\label{fig:Simulink_blokdiagram_1}
 \end{figure}
 
 State matricen hentes direkte fra modellen ligesom i Matlab. Delay blokken med 2 unit delay skyldes at gerne vi simulere at gyroskopet på udgangen bruger 1 delay på at sample og og 1 delay på at integrere den samplede værdi.
-Ved at sende et step med amplituden 30 ind som reference signal forventer vi derfor at kunne måle en værdi på 30 på outputtet efter cirka 1 sekund efter steppet. Dette kan ses i scopet 
+Ved at sende et step med amplituden 30 ind som reference signal forventer vi derfor at kunne måle en værdi på 30 på outputtet efter cirka halvt sekund efter steppet. Dette kan ses i scopet i \autoref{fig:Simulink_scope_1}.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width = 0.8\textwidth]{figur/Simulink_scope_1}
-	\caption{Step respons for den kontinuere controller uden observer}
+	\caption{Step respons (Amplitude = 30) for den kontinuere controller uden observer}
 	\label{fig:Simulink_scope_1}
 \end{figure}
 
-Resultatet passer med forventningerne med settling time, overshoot og ingen steady state error. Men som nævnt tidligere kan man ikke hente disse states direkte ud fra systemet, så derfor tilføjes en observer til blokdiagrammet i \autoref{fig:Simulink_blokdiagram_1} så state matrixen kan hentes fra outputtet i stedet. Dette kan ses herunder.
+Resultatet i \autoref{fig:Simulink_scope_1} passer med forventningerne med settling time og ingen steady state error. Dog ses der et lille overshoot på cirka 1.5\%, hvilket tyder på at systemet er blevet lidt mindre stabilt pga delay blokken med 2 unit delay. Dette har dog minimal betydning, da kravet om max 5\% overhoot stadig overholdes.
+
+Men som nævnt tidligere kan man ikke hente state matricen direkte ud fra systemet, så derfor tilføjes en observer til blokdiagrammet i \autoref{fig:Simulink_blokdiagram_1} så state matrixen kan hentes fra outputtet i stedet. Dette kan ses herunder i \autoref{fig:Simulink_blokdiagram_2}.
 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.9\textwidth]{figur/Simulink_blokdiagram_2}
+	\includegraphics[width = 1\textwidth]{figur/Simulink_blokdiagram_2}
 	\caption{Blok diagram for den kontinuere controller med observer}
 	\label{fig:Simulink_blokdiagram_2}
 \end{figure}
-I \autoref{fig:Simulink_blokdiagram_2} ses det observeren har outputtet fra gyroskoppet som input og spytter 2 states ud som føres tilbage med hver deres forstærkning K. Observeren er implementeret ud fra tidligere design og kan ses herunder
-
+I \autoref{fig:Simulink_blokdiagram_2} ses det observeren har outputtet fra gyroskoppet som input sammen med inputtet til motorblokken (state space repræsentation) og spytter states matricen ud som føres tilbage med forstærkningensmatricen K . Observeren er implementeret ud fra tidligere design og kan ses i \autoref{fig:Simulink_observer_continues}. Ved at sende et step med amplituden 30 ind som forstyrrelse signal på outputtet (forstyrrelse fra overfladens hælding) forventer vi derfor at kunne måle en værdi på 0 på outputtet efter cirka halvt sekund efter steppet, hvis referencesignalet sættes til 0. Dette kan ses i scopet scopet i \autoref{fig:Simulink_scope_2}.
+ 
 \begin{figure}[H]
 	\centering
-	\includegraphics[width = 0.7\textwidth]{figur/Simulink_observer_continues}
-	\caption{Kontinuer observer}
-	\label{fig:Simulink_observer_continues}
+	\includegraphics[width = 0.8\textwidth]{figur/Simulink_scope_2}
+	\caption{Step respons for den kontinuere controller med observer påsat forstyrrelse på outputtet (Amplitude = 30)}
+	\label{fig:Simulink_scope_2}
 \end{figure}
 
-Ved blokdiagrammet i \autoref{fig:Simulink_blokdiagram_1} kan 
+Resultatet i \autoref{fig:Simulink_scope_2} passer med forventningerne og viser at systemet regulere tilbage til vandret efter cirka et halvt sekund hvis det bliver udsat for en forstyrrelse. Dog ses det at, reguleringen ikke sker helt jævnt, hvilket formentlig skyldes at observeren påvirker systemet med sine poler og ikke gætter 100\% rigtig på state matricen hvormed resultatet påvirkes. Dette er dog acceptabelt idet systemet stadig finder tilbage på plads uden alt for meget oscillation. 
+
 
 
