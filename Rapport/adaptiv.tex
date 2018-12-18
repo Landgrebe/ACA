@@ -45,10 +45,10 @@ RLS algoritmen, ville levere en estimation af systemet Thetahat. RLS algoritmen 
 	\caption{Formel for theta fra RLS online blokken}
 	\label{fig:RLS_formel}
 \end{figure}
-Hvor Phi de kendte værdier, in- og output sat sammen i en samlet vektor,  mens Thetahat er model parmenterne for systemet (estimation) sat sammen i en samlet vektor 
+Hvor Phi er de kendte værdier, in- og output sat sammen i en samlet vektor,  mens Thetahat er model parmenterne for systemet (estimation) sat sammen i en samlet vektor 
 
 \subsubsection{Glemselsfaktor og Kalman filter}  
-Det endelige RLS system kan forbedres med flere faktorer, her vil vi kort forklare om de to tilføjelser, som er blevet præsenteret til undervisningen, og som RLS algotirmen kan udvides med.
+Det endelige RLS system kan forbedres med flere faktorer, her vil vi kort forklare om de to tilføjelser, som er blevet præsenteret til undervisningen, og som RLS algoritmen kan udvides med.
 
 \textbf{Glemselsfaktor}
 Glemselsfaktoren gør det, at modellen kigger mere på de forrige samples end de tidlige, og derfor ikke kigger jævnt  på hele signalet. Dette gør systemet hurtigere overfor ændringer, da den nye sampling med ændringen vejere tungere end tidligere samples. Dette fjerne modelstøjen fra estimationen, hvis processens karatestik er tidsafhængig. 

@@ -9,7 +9,7 @@ For at teste den kontinuere controller's respons modelleres systemet ud fra stat
 	\label{fig:Simulink_blokdiagram_1}
 \end{figure}
 
-State matricen hentes direkte fra modellen ligesom i Matlab. Delay blokken med 2 unit delay skyldes, at gerne vi simulere at gyroskopet på udgangen bruger 1 delay på at sample og 1 delay på at integrere den samplede vinkelhastighed til en vinkel. Ved at sende et step med amplituden 30 ind som reference signal forventer vi derfor, at kunne måle en værdi på 30 på outputtet efter cirka halvt sekund efter steppet. Dette kan ses i scopet i \autoref{fig:Simulink_scope_1}.
+State matricen hentes direkte fra modellen ligesom i Matlab. Delay blokken med 2 unit delay skyldes, at gruppen gerne vi simulere at gyroskopet på udgangen bruger 1 delay på at sample og 1 delay på at integrere den samplede vinkelhastighed til en vinkel. Ved at sende et step med amplituden 30 ind som reference signal forventer vi derfor, at kunne måle en værdi på 30 på outputtet efter cirka halvt sekund efter steppet. Dette kan ses i scopet i \autoref{fig:Simulink_scope_1}.
 
 \begin{figure}[H]
 	\centering
