@@ -30,21 +30,6 @@
 	
 #.pdf
 			
-## Bibliography auxiliary files (bibtex/biblatex/biber):
-	
-*.bbl
-	
-*.bcf
-	
-*.blg
-	
-*-blx.aux
-	
-*-blx.bib
-	
-*.brf
-	
-*.run.xml
 	
 	
 ## Build tool auxiliary files:
